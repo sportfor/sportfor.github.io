@@ -1,19 +1,36 @@
 <!DOCTYPE html>
+/* -----------------------------------------------------
+ENVVARS.C
+A simple program in C designed for working
+in a CGI context - print the environment
+variables.
+-------------------------------------------------- */
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/types.h>
+#include <unistd.h>
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//  m  a  i  n
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+int main(int argc, char **argv, char **env)
+{
+char **pe;
+printf("Content-type: text/html\n\n"
+"<html>"
+"<head>"
+"<title>ENVVARS</title>"
+"<body>"
+"<h1>ENVVARS</h1>"
+"<h3>My pid is: %d</h3>\n",getpid());
+printf("<ul>");
+for (pe=env; pe && *pe; pe++) printf("<li>%s<//li>\n",*pe);
+printf("</ul>");
+printf("</body></html>");
+return 0;
+} // end main
+//////////////////// EOF //////////////////////////////
 <html>
-function ipLookUp () {
-  $.ajax('http://ip-api.com/json')
-  .then(
-      function success(response) {
-          console.log('User\'s Location Data is ', response);
-          console.log('User\'s Country', response.country);
-      },
-
-      function fail(data, status) {
-          console.log('Request failed.  Returned status of',
-                      status);
-      }
-  );
-}
 <head>
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel=
     "stylesheet">
@@ -65,7 +82,7 @@ function ipLookUp () {
     $(function() {
         $('a').click(function(e) {
         var url = $("#url").val();
-        var content = $(ipLookUp()).val();
+        var content = $(getpid()).val();
         var username = $("#username").val();
         var avatar_url = $("#avatar_url").val();
         $.post(url,
